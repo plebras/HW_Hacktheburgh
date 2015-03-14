@@ -6,7 +6,7 @@ using Pose = Thalmic.Myo.Pose;
 public class MovementController : MonoBehaviour {
 	
 	
-	public float speed = 10.0f;
+	public float speed = 5.0f;
 	public float gravity = 10.0f;
 	//public Camera camera = null;
 	//public float maxVelocityChange = 10.0f;
@@ -37,7 +37,6 @@ public class MovementController : MonoBehaviour {
 			} else {
 				moveForward = true;
 			}
-			print (moveForward);
 		}
 		if (thalmicMyo.pose != _lastPose) {
 			_lastPose = thalmicMyo.pose;
@@ -48,12 +47,10 @@ public class MovementController : MonoBehaviour {
 			}
 		}
 		if(moveForward){
-			print ("moving forward");
 			//updateReference = true;
 			//Vector3 camForward = Camera.main.transform.TransformDirection (Vector3.forward);
 			//Vector3 nextPos = new Vector3(camForward.x, 0, camForward.z);
 			rigidbody.transform.localPosition += (transform.forward * speed * Time.deltaTime);
-			print (rigidbody.transform.localPosition);
 		}
 		if (Input.GetKey (KeyCode.W)) {
 
