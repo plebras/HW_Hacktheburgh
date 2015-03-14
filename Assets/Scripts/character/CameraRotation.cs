@@ -81,7 +81,6 @@ public class CameraRotation : MonoBehaviour {
 		
 		// Here the anti-roll and yaw rotations are applied to the myo Armband's forward direction to yield
 		// the orientation of the joint.
-		print (myo.transform.rotation);
 		//transform.rotation = _antiYaw * Quaternion.LookRotation (myo.transform.forward);
 		float rotY = myo.transform.rotation.eulerAngles.y;
 		if (rotY > 45 && rotY < 180) {
@@ -89,7 +88,6 @@ public class CameraRotation : MonoBehaviour {
 		} else if (rotY < 315 && rotY > 180) {
 			rotY = 315;
 		}
-		print (rotY);
 		transform.eulerAngles = new Vector3(0, character.transform.rotation.eulerAngles.y + rotY, 0);
 		// The above calculations were done assuming the Myo armbands's +x direction, in its own coordinate system,
 		// was facing toward the wearer's elbow. If the Myo armband is worn with its +x direction facing the other way,

@@ -45,6 +45,9 @@ public class MovementController : MonoBehaviour {
 			} else if (thalmicMyo.pose == Pose.WaveOut) {
 				rigidbody.transform.Rotate(0,90,0);
 			}
+			if (thalmicMyo.pose == Pose.Fist) {
+				shoot();
+			}
 		}
 		if(moveForward){
 			//updateReference = true;
@@ -74,5 +77,10 @@ public class MovementController : MonoBehaviour {
 				
 		//rigidbody.AddForce(new Vector3 (0, -gravity * rigidbody.mass, 0));
 
-	} 
+	}
+
+	void shoot(){
+		Vector3 shootingDirection = Camera.main.transform.TransformDirection (Vector3.forward);
+		print (shootingDirection);
+	}
 }
