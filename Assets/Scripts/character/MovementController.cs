@@ -12,6 +12,9 @@ public class MovementController : MonoBehaviour {
 	//public float maxVelocityChange = 10.0f;
 	private bool moveForward = false;
 
+	public GameObject camera = null;
+	public GameObject bullet = null;
+
 	// Myo variables
 	public GameObject myo = null;
 	private Pose _lastPose = Pose.Unknown;
@@ -31,13 +34,13 @@ public class MovementController : MonoBehaviour {
 		//if (thalmicMyo.pose != _lastPose) {
 			//_lastPose = thalmicMyo.pose;
 		
-		if (thalmicMyo.pose == Pose.FingersSpread) {
-			if (moveForward) {
-				moveForward = false;
-			} else {
-				moveForward = true;
-			}
-		}
+		//if (thalmicMyo.pose == Pose.FingersSpread) {
+		//	if (moveForward) {
+		//		moveForward = false;
+		//	} else {
+		//		moveForward = true;
+		//	}
+		//}
 		if (thalmicMyo.pose != _lastPose) {
 			_lastPose = thalmicMyo.pose;
 			if (thalmicMyo.pose == Pose.WaveIn) {
@@ -49,7 +52,7 @@ public class MovementController : MonoBehaviour {
 				shoot();
 			}
 		}
-		if(moveForward){
+		if (thalmicMyo.pose == Pose.FingersSpread) {
 			//updateReference = true;
 			//Vector3 camForward = Camera.main.transform.TransformDirection (Vector3.forward);
 			//Vector3 nextPos = new Vector3(camForward.x, 0, camForward.z);
@@ -80,7 +83,9 @@ public class MovementController : MonoBehaviour {
 	}
 
 	void shoot(){
-		Vector3 shootingDirection = Camera.main.transform.TransformDirection (Vector3.forward);
-		print (shootingDirection);
+		Vector3 shootingDirection = camera.transform.forward;
+		GameObject b = (GameObject)Instantiate (bullet, rigidbody.transform.position + shootingDirection, Quaternion.identity);
+		//bullet.rigidbody.velocity = shootingDirection*10.0f;
+		b.rigidbody.AddForce (shootingDirection * 150.0f);
 	}
 }
