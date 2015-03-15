@@ -23,7 +23,7 @@ public class CameraRotation : MonoBehaviour {
 	
 	// A reference angle representing how the armband is rotated about the wearer's arm, i.e. roll.
 	// Set by making the fingers spread pose or pressing "r".
-	private float _referenceRoll = 0.0f;
+	//private float _referenceRoll = 0.0f;
 	
 	// The pose from the last update. This is used to determine if the pose has changed
 	// so that actions are only performed upon making them rather than every frame during
@@ -41,8 +41,11 @@ public class CameraRotation : MonoBehaviour {
 		//if (thalmicMyo.pose != _lastPose) {
 		//	_lastPose = thalmicMyo.pose;
 		//	
-		if (thalmicMyo.pose == Pose.DoubleTap) {
+		if (thalmicMyo.pose != Pose.DoubleTap)
+			_lastPose = Pose.Unknown;
+		if ((thalmicMyo.pose == Pose.DoubleTap)&&(_lastPose != Pose.DoubleTap)) {
 			updateReference = true;
+			_lastPose = thalmicMyo.pose;
 		//		
 				//ExtendUnlockAndNotifyUserAction(thalmicMyo);
 		//	}
@@ -50,7 +53,6 @@ public class CameraRotation : MonoBehaviour {
 		if (Input.GetKeyDown ("r")) {
 			updateReference = true;
 		}
-		
 		// Update references. This anchors the joint on-screen such that it faces forward away
 		// from the viewer when the Myo armband is oriented the way it is when these references are taken.
 		if (updateReference) {
@@ -58,28 +60,31 @@ public class CameraRotation : MonoBehaviour {
 			// vector of the rotation with Z = 1 when the wearer's arm is pointing in the reference direction.
 			_antiYaw = Quaternion.FromToRotation (
 				new Vector3 (myo.transform.forward.x, 0, 0),
-				new Vector3 (0, 0, 1)
+				new Vector3 (0, 0, 0)
 				);
+
+			Debug.Log("Resetting");
+			transform.rotation = transform.rotation * _antiYaw;
 			
 			// _referenceRoll represents how many degrees the Myo armband is rotated clockwise
 			// about its forward axis (when looking down the wearer's arm towards their hand) from the reference zero
 			// roll direction. This direction is calculated and explained below. When this reference is
 			// taken, the joint will be rotated about its forward axis such that it faces upwards when
 			// the roll value matches the reference.
-			Vector3 referenceZeroRoll = computeZeroRollVector (myo.transform.forward);
-			_referenceRoll = rollFromZero (referenceZeroRoll, myo.transform.forward, myo.transform.up);
+			//Vector3 referenceZeroRoll = computeZeroRollVector (myo.transform.forward);
+			//_referenceRoll = rollFromZero (referenceZeroRoll, myo.transform.forward, myo.transform.up);
 		}
 		
 		// Current zero roll vector and roll value.
-		Vector3 zeroRoll = computeZeroRollVector (myo.transform.forward);
-		float roll = rollFromZero (zeroRoll, myo.transform.forward, myo.transform.up);
+		//Vector3 zeroRoll = computeZeroRollVector (myo.transform.forward);
+		//float roll = rollFromZero (zeroRoll, myo.transform.forward, myo.transform.up);
 		
 		// The relative roll is simply how much the current roll has changed relative to the reference roll.
 		// adjustAngle simply keeps the resultant value within -180 to 180 degrees.
-		float relativeRoll = normalizeAngle (roll - _referenceRoll);
+		//float relativeRoll = normalizeAngle (roll - _referenceRoll);
 		
 		// antiRoll represents a rotation about the myo Armband's forward axis adjusting for reference roll.
-		Quaternion antiRoll = Quaternion.AngleAxis (relativeRoll, myo.transform.forward);
+		//Quaternion antiRoll = Quaternion.AngleAxis (relativeRoll, myo.transform.forward);
 		
 		// Here the anti-roll and yaw rotations are applied to the myo Armband's forward direction to yield
 		// the orientation of the joint.
@@ -91,7 +96,7 @@ public class CameraRotation : MonoBehaviour {
 		float diffRotX = tmpX - prevRotX;
 		prevRotY = tmpY;
 		prevRotX = tmpX;
-		transform.Rotate (diffRotX, diffRotY, 0);
+		transform.Rotate (new Vector3(diffRotX, diffRotY, 0));
 
 		// The above calculations were done assuming the Myo armbands's +x direction, in its own coordinate system,
 		// was facing toward the wearer's elbow. If the Myo armband is worn with its +x direction facing the other way,
