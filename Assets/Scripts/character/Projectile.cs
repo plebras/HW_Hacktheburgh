@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Projectile : MonoBehaviour {
 
-	private float lifetime = 2.0f;
+	private float lifetime = 3.0f;
 
 	// Use this for initialization
 	void Start () {
