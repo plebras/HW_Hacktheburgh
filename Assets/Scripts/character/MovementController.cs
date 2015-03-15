@@ -22,7 +22,7 @@ public class MovementController : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		
-		rigidbody.useGravity = false;
+		//rigidbody.useGravity = false;
 		//rigidbody.freezeRotation = true;
 		
 	}
