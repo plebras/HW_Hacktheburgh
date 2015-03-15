@@ -8,6 +8,7 @@ public class MazeButton : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		mazeController = FindObjectOfType<MiniMazeController>();
+		gameObject.renderer.material.color = Color.yellow;
 	
 	}
 	
@@ -18,7 +19,7 @@ public class MazeButton : MonoBehaviour {
 
 	public void OnCollisionEnter(Collision collision)
 	{
-		if (collision.collider.CompareTag("Bullet")){
+		if (collision.collider.CompareTag("bullet")){
 			ButtonAction ();
 		}
 	}
