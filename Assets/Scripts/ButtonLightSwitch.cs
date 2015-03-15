@@ -16,12 +16,15 @@ public class ButtonLightSwitch : MonoBehaviour {
 
 	}
 
-	public void OnEnterCollision(Collision coll)
+	void OnEnterCollision(Collision coll)
 	{
 		Debug.Log ("Button Collide");
-		if(coll.collider.CompareTag("bullet"){
+		if(coll.collider.CompareTag("bullet")){
 			Debug.Log ("Colliding with bullet");
 			lightController.Switch(buttonNumber);
 		}
+	}
+
+	public void ButtonAction(){
 	}
 }
