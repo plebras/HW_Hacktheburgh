@@ -10,7 +10,7 @@ public class MovementController : MonoBehaviour {
 	public float gravity = 10.0f;
 	//public Camera camera = null;
 	//public float maxVelocityChange = 10.0f;
-	private bool moveForward = false;
+	//private bool moveForward = false;
 
 	public GameObject camera = null;
 	public GameObject bullet = null;

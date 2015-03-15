@@ -19,7 +19,7 @@ public class ButtonLightSwitch : MonoBehaviour {
 	void OnCollisionEnter(Collision coll)
 	{
 		Debug.Log ("Button Collide");
-		if(coll.collider.CompareTag("Bullet")){
+		if(coll.collider.CompareTag("bullet")){
 			Debug.Log ("Colliding with bullet");
 			lightController.Switch(buttonNumber);
 		}
