@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour {
 		//Debug.DrawRay(transform.position, fwd);
 		if (Physics.Raycast (transform.position, fwd, 30.0f)) {
 			float yAngleInc = Random.Range(1, 3)*90;
-			print (yAngleInc);
+			//print (yAngleInc);
 			transform.Rotate (new Vector3 (0, yAngleInc, 0));
 			//float yAngle = transform.rotation.eulerAngles.y + yAngleInc;
 			//if(yAngle >= 360) yAngle -= 360;

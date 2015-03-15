@@ -13,6 +13,8 @@ public class CameraRotation : MonoBehaviour {
 	public GameObject myo = null;
 
 	public GameObject character = null;
+	public float prevRotY = 0.0f;
+	public float prevRotX = 0.0f;
 	
 	// A rotation that compensates for the Myo armband's orientation parallel to the ground, i.e. yaw.
 	// Once set, the direction the Myo armband is facing becomes "forward" within the program.
@@ -39,12 +41,12 @@ public class CameraRotation : MonoBehaviour {
 		//if (thalmicMyo.pose != _lastPose) {
 		//	_lastPose = thalmicMyo.pose;
 		//	
-		//	if (thalmicMyo.pose == Pose.FingersSpread) {
-		//		updateReference = true;
+		if (thalmicMyo.pose == Pose.DoubleTap) {
+			updateReference = true;
 		//		
-		//		ExtendUnlockAndNotifyUserAction(thalmicMyo);
+				//ExtendUnlockAndNotifyUserAction(thalmicMyo);
 		//	}
-		//}
+		}
 		if (Input.GetKeyDown ("r")) {
 			updateReference = true;
 		}
@@ -55,7 +57,7 @@ public class CameraRotation : MonoBehaviour {
 			// _antiYaw represents a rotation of the Myo armband about the Y axis (up) which aligns the forward
 			// vector of the rotation with Z = 1 when the wearer's arm is pointing in the reference direction.
 			_antiYaw = Quaternion.FromToRotation (
-				new Vector3 (myo.transform.forward.x, 0, myo.transform.forward.z),
+				new Vector3 (myo.transform.forward.x, 0, 0),
 				new Vector3 (0, 0, 1)
 				);
 			
@@ -81,28 +83,16 @@ public class CameraRotation : MonoBehaviour {
 		
 		// Here the anti-roll and yaw rotations are applied to the myo Armband's forward direction to yield
 		// the orientation of the joint.
-		//transform.rotation = _antiYaw * Quaternion.LookRotation (myo.transform.forward);
-		float rotY = myo.transform.rotation.eulerAngles.y;
-		//print (rotY);
-		float diffY = 0;
-		if (rotY > 45 && rotY < 180) {
-			diffY = rotY - 45;
-			rotY = 45;
-		} else if (rotY < 315 && rotY > 180) {
-			diffY = 315 - rotY;
-			rotY = 315;
-		}
-		myo.transform.eulerAngles = new Vector3 (myo.transform.rotation.eulerAngles.x, diffY, myo.transform.rotation.eulerAngles.z);
-		float rotX = myo.transform.rotation.eulerAngles.x;
-		//print (rotY);
-		if (rotX > 15 && rotX < 180) {
-			rotX = 15;
-		} else if (rotX < 345 && rotX > 180) {
-			rotX = 345;
-		}
-		//print (rotY);
-		transform.eulerAngles = new Vector3(character.transform.rotation.eulerAngles.x + rotX, character.transform.rotation.eulerAngles.y + rotY, 0);
-		//print (transform.eulerAngles);
+		//Vector3 tmp = myo.transform.forward;
+		//print (tmp);
+		float tmpY = myo.transform.eulerAngles.y;
+		float tmpX = myo.transform.eulerAngles.x;
+		float diffRotY = tmpY - prevRotY;
+		float diffRotX = tmpX - prevRotX;
+		prevRotY = tmpY;
+		prevRotX = tmpX;
+		transform.Rotate (diffRotX, diffRotY, 0);
+
 		// The above calculations were done assuming the Myo armbands's +x direction, in its own coordinate system,
 		// was facing toward the wearer's elbow. If the Myo armband is worn with its +x direction facing the other way,
 		// the rotation needs to be updated to compensate.

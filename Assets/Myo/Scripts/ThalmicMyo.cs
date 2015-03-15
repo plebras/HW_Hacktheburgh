@@ -104,8 +104,9 @@ public class ThalmicMyo : MonoBehaviour {
 
     void myo_OnOrientationData(object sender, Thalmic.Myo.OrientationDataEventArgs e) {
         lock (_lock) {
+			print (e.Orientation);
             _myoQuaternion = e.Orientation;
-        }
+		}
     }
 
     void myo_OnAccelerometerData(object sender, Thalmic.Myo.AccelerometerDataEventArgs e) {
