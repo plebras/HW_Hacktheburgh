@@ -29,7 +29,7 @@ public class FloorTile : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision collision){
-		Debug.Log("COLLIDING");
+		Debug.Log("Tile colliding");
 		if (collision.collider.CompareTag("Player")){
 			Debug.Log("COLLIDING WithPlayer");
 			ChangeColor();
