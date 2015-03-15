@@ -89,8 +89,15 @@ public class CameraRotation : MonoBehaviour {
 		} else if (rotY < 315 && rotY > 180) {
 			rotY = 315;
 		}
+		float rotX = myo.transform.rotation.eulerAngles.x;
 		//print (rotY);
-		transform.eulerAngles = new Vector3(0, character.transform.rotation.eulerAngles.y + rotY, 0);
+		if (rotX > 15 && rotX < 180) {
+			rotX = 15;
+		} else if (rotX < 345 && rotX > 180) {
+			rotX = 345;
+		}
+		//print (rotY);
+		transform.eulerAngles = new Vector3(character.transform.rotation.eulerAngles.x + rotX, character.transform.rotation.eulerAngles.y + rotY, 0);
 		//print (transform.eulerAngles);
 		// The above calculations were done assuming the Myo armbands's +x direction, in its own coordinate system,
 		// was facing toward the wearer's elbow. If the Myo armband is worn with its +x direction facing the other way,
