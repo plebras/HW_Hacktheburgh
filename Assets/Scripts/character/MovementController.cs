@@ -52,7 +52,8 @@ public class MovementController : MonoBehaviour {
 				shoot();
 			}
 		}
-		if (thalmicMyo.pose == Pose.FingersSpread) {
+		Vector3 fwd = transform.TransformDirection (Vector3.forward);
+		if (thalmicMyo.pose == Pose.FingersSpread && !Physics.Raycast(transform.position, fwd, 1.0f)) {
 			//updateReference = true;
 			//Vector3 camForward = Camera.main.transform.TransformDirection (Vector3.forward);
 			//Vector3 nextPos = new Vector3(camForward.x, 0, camForward.z);
@@ -84,7 +85,7 @@ public class MovementController : MonoBehaviour {
 
 	void shoot(){
 		Vector3 shootingDirection = camera.transform.forward;
-		GameObject b = (GameObject)Instantiate (bullet, rigidbody.transform.position + shootingDirection, Quaternion.identity);
+		GameObject b = (GameObject)Instantiate (bullet, camera.transform.position + shootingDirection, Quaternion.identity);
 		//bullet.rigidbody.velocity = shootingDirection*10.0f;
 		b.rigidbody.AddForce (shootingDirection * 150.0f);
 	}

@@ -3,11 +3,11 @@ using System.Collections;
 
 public class Projectile : MonoBehaviour {
 
-	private float lifetime = 2.0f;
+	private float lifetime = 3.0f;
 
 	// Use this for initialization
 	void Start () {
-		Destroy (gameObject, lifetime);
+		GameObject.Destroy (gameObject, lifetime);
 	}
 	
 	// Update is called once per frame
@@ -16,7 +16,8 @@ public class Projectile : MonoBehaviour {
 
 	}
 
-	void Awake() {	
+	void OnCollisionEnter(Collision coll) {	
+		GameObject.Destroy (gameObject);
 
 	}
 }
