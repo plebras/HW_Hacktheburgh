@@ -87,6 +87,6 @@ public class MovementController : MonoBehaviour {
 		Vector3 shootingDirection = camera.transform.forward;
 		GameObject b = (GameObject)Instantiate (bullet, camera.transform.position + shootingDirection, Quaternion.identity);
 		//bullet.rigidbody.velocity = shootingDirection*10.0f;
-		b.rigidbody.AddForce (shootingDirection * 150.0f);
+		b.rigidbody.AddForce (shootingDirection * 300.0f);
 	}
 }

@@ -84,11 +84,15 @@ public class CameraRotation : MonoBehaviour {
 		//transform.rotation = _antiYaw * Quaternion.LookRotation (myo.transform.forward);
 		float rotY = myo.transform.rotation.eulerAngles.y;
 		//print (rotY);
+		float diffY = 0;
 		if (rotY > 45 && rotY < 180) {
+			diffY = rotY - 45;
 			rotY = 45;
 		} else if (rotY < 315 && rotY > 180) {
+			diffY = 315 - rotY;
 			rotY = 315;
 		}
+		myo.transform.eulerAngles = new Vector3 (myo.transform.rotation.eulerAngles.x, diffY, myo.transform.rotation.eulerAngles.z);
 		float rotX = myo.transform.rotation.eulerAngles.x;
 		//print (rotY);
 		if (rotX > 15 && rotX < 180) {
